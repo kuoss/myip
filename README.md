@@ -1,5 +1,5 @@
 # myip
-What's my IP
+"What's my IP" application
 
 [![release](https://github.com/kuoss/myip/actions/workflows/release.yml/badge.svg)](https://github.com/kuoss/myip/actions)
 [![pull-request](https://github.com/kuoss/myip/actions/workflows/pull-request.yml/badge.svg)](https://github.com/kuoss/myip/actions)
@@ -9,3 +9,8 @@ What's my IP
 [![GitHub stars](https://img.shields.io/github/stars/kuoss/myip.svg)](https://github.com/kuoss/myip/stargazers)
 [![contribuiton welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](https://github.com/kuoss/myip/blob/main/CONTRIBUTING.md)
 [![Go Report Card](https://goreportcard.com/badge/github.com/kuoss/myip)](https://goreportcard.com/report/github.com/kuoss/myip)
+
+env         | description                                 | default | example
+----------- | ------------------------------------------- | ------- | -------
+APP_ADDR    | the TCP address for the server to listen on | `:80`   | `:8080`
+APP_PROXIES | comma-separated trusted proxies             | ``      | `10.0.0.0/8,192.168.1.33`
