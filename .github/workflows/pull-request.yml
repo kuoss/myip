@@ -76,16 +76,17 @@ jobs:
   go-test-coverage:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4
     - uses: actions/setup-go@v4
       with:
         go-version: '^1.21.5'
-    - uses: actions/checkout@v3
-    - run: go test ./... -race -covermode=atomic -coverprofile=coverage.out
-    - uses: codecov/codecov-action@v3
-    - run: go install github.com/mattn/goveralls@latest
-    - run: goveralls -coverprofile=coverage.out -service=github
+    - run: go test ./... -race -covermode=atomic -coverprofile=coverage.txt
+    - uses: codecov/codecov-action@v4-beta
       env:
-        COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    - uses: shogo82148/actions-goveralls@v1
+      with:
+        path-to-profile: coverage.txt
 
   go-licenses:
     runs-on: ubuntu-latest
