@@ -4,7 +4,8 @@ init:
 run:
 	air
 
-checks: misspell gocyclo
+checks:
+	sh hack/checks.sh
 
 misspell:
 	sh hack/misspell.sh
