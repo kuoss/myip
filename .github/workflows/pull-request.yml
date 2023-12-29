@@ -77,6 +77,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/setup-go@v4
+      with:
+        go-version: '^1.21.5'
     - uses: actions/checkout@v3
     - run: go test ./... -race -failfast
 
@@ -84,6 +86,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/setup-go@v4
+      with:
+        go-version: '^1.21.5'
     - uses: actions/checkout@v3
     - run: go test ./... -race -covermode=atomic -coverprofile=coverprofile
     - uses: codecov/codecov-action@v3
@@ -96,6 +100,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/setup-go@v4
+      with:
+        go-version: '^1.21.5'
     - uses: actions/checkout@v3
     - run: go install github.com/google/go-licenses@v1.6.0    
     - run: go-licenses check .
