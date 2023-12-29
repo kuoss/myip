@@ -4,7 +4,6 @@
 [![release](https://github.com/kuoss/myip/actions/workflows/release.yml/badge.svg)](https://github.com/kuoss/myip/actions)
 [![pull-request](https://github.com/kuoss/myip/actions/workflows/pull-request.yml/badge.svg)](https://github.com/kuoss/myip/actions)
 [![Coverage Status](https://coveralls.io/repos/github/kuoss/myip/badge.svg?branch=main)](https://coveralls.io/github/kuoss/myip?branch=main)
-[![codecov](https://codecov.io/gh/kuoss/myip/graph/badge.svg?token=P27TZ62KTN)](https://codecov.io/gh/kuoss/myip)
 [![GitHub license](https://img.shields.io/github/license/kuoss/myip.svg)](https://github.com/kuoss/myip/blob/main/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/kuoss/myip.svg)](https://github.com/kuoss/myip/stargazers)
 [![contribuiton welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](https://github.com/kuoss/myip/blob/main/CONTRIBUTING.md)
