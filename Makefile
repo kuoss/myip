@@ -12,3 +12,6 @@ misspell:
 
 gocyclo:
 	sh hack/gocyclo.sh
+
+staticcheck:
+	sh hack/staticcheck.sh
