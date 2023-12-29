@@ -89,7 +89,7 @@ jobs:
       with:
         go-version: '^1.21.5'
     - uses: actions/checkout@v3
-    - run: go test ./... -race -covermode=atomic -coverprofile=coverprofile
+    - run: go test ./... -race -covermode=atomic -coverprofile=coverage.out
     - uses: codecov/codecov-action@v3
     - run: go install github.com/mattn/goveralls@latest
     - run: goveralls -coverprofile=coverage.out -service=github
