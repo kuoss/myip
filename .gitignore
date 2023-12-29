@@ -21,4 +21,5 @@
 go.work
 
 # custom
+bin/
 tmp/
