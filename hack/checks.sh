@@ -8,8 +8,7 @@ sh hack/misspell.sh
 go vet ./...
 which goimports || go install golang.org/x/tools/cmd/goimports@latest
 goimports -local -v -w .
-which staticcheck || go install honnef.co/go/tools/cmd/staticcheck@latest
-staticcheck ./...
+sh hack/staticcheck.sh
 which golangci-lint || go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 golangci-lint run --timeout 5m
 sh hack/test-cover.sh
