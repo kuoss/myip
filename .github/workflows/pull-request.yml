@@ -1,5 +1,8 @@
 name: pull-request
 on:
+  push:
+    branches:
+    - main
   pull_request:
     types: [opened, reopened, synchronize]
 permissions:
@@ -80,13 +83,10 @@ jobs:
     - uses: actions/setup-go@v4
       with:
         go-version: '^1.21.5'
-    - run: go test ./... -race -covermode=atomic -coverprofile=coverage.txt
-    - uses: codecov/codecov-action@v4-beta
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    - run: go test ./... -race -coverprofile=profile.cov
     - uses: shogo82148/actions-goveralls@v1
       with:
-        path-to-profile: coverage.txt
+        path-to-profile: profile.cov
 
   go-licenses:
     runs-on: ubuntu-latest
