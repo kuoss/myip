@@ -27,15 +27,18 @@ func loadConfig() (Config, error) {
 	return cfg, nil
 }
 
-func setupRouter(cfg Config) *gin.Engine {
+func setupRouter(cfg Config) (*gin.Engine, error) {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
-	router.SetTrustedProxies(cfg.Proxies)
+	err := router.SetTrustedProxies(cfg.Proxies)
+	if err != nil {
+		return nil, fmt.Errorf("setTrustedProxies err: %w", err)
+	}
 	router.ForwardedByClientIP = true
 	router.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, c.ClientIP()+"\n")
 	})
-	return router
+	return router, nil
 }
 
 func run() error {
@@ -44,8 +47,11 @@ func run() error {
 		return fmt.Errorf("loadConfig err: %w", err)
 	}
 	log.Println("IP App started...")
-	r := setupRouter(cfg)
-	return r.Run(cfg.Addr)
+	router, err := setupRouter(cfg)
+	if err != nil {
+		return fmt.Errorf("setupRouter err: %w", err)
+	}
+	return router.Run(cfg.Addr)
 }
 
 func main() {
