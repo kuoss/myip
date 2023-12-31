@@ -9,7 +9,7 @@
 [![contribuiton welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](https://github.com/kuoss/myip/blob/main/CONTRIBUTING.md)
 [![Go Report Card](https://goreportcard.com/badge/github.com/kuoss/myip)](https://goreportcard.com/report/github.com/kuoss/myip)
 
-env           | description                                 | default | example
-------------- | ------------------------------------------- | ------- | -------
-`APP_ADDR`    | the TCP address for the server to listen on | `:80`   | `:8080`
-`APP_PROXIES` | comma-separated trusted proxies             |         | `10.0.0.0/8,192.168.1.33`
+env           | description                                     | default | example
+------------- | ----------------------------------------------- | ------- | -------
+`APP_ADDR`    | the TCP address for the server to listen on     | `:80`   | `:8080`
+`APP_PROXIES` | a comma separated list of trusted proxies CIDRs |         | `10.0.0.0/8,192.168.1.33`
