@@ -7,6 +7,7 @@
 [![GitHub license](https://img.shields.io/github/license/kuoss/myip.svg)](https://github.com/kuoss/myip/blob/main/LICENSE)
 [![Go Report Card](https://goreportcard.com/badge/github.com/kuoss/myip)](https://goreportcard.com/report/github.com/kuoss/myip)
 [![contribuiton welcome](https://img.shields.io/badge/contributions-welcome-orange.svg)](https://github.com/kuoss/myip/blob/main/CONTRIBUTING.md)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/kuoss)](https://artifacthub.io/packages/search?org=kuoss)
 [![GitHub stars](https://img.shields.io/github/stars/kuoss/myip.svg)](https://github.com/kuoss/myip/stargazers)
 
 env           | description                                     | default | example
