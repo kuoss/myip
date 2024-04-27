@@ -4,14 +4,18 @@ init:
 run:
 	air
 
+test:
+	go test -v -race -failfast ./...
+
 checks:
 	sh hack/checks.sh
 
-misspell:
-	sh hack/misspell.sh
+cover:
+	sh hack/cover.sh
 
-gocyclo:
-	sh hack/gocyclo.sh
+lint:
+	sh hack/lint.sh
 
-staticcheck:
-	sh hack/staticcheck.sh
+licenses:
+	sh hack/licenses.sh
+
