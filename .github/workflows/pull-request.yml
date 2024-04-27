@@ -14,10 +14,7 @@ jobs:
     - uses: actions/setup-go@v5
       with:
         go-version: '1.22'
-    - name: golangci-lint
-      uses: golangci/golangci-lint-action@v3
-      with:
-        args: --timeout=5m -v
+    - run: make lint
 
   licenses:
     runs-on: ubuntu-latest
