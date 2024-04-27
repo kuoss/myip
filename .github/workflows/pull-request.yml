@@ -1,8 +1,5 @@
 name: pull-request
 on:
-  push:
-    branches:
-    - main
   pull_request:
     types: [opened, reopened, synchronize]
 permissions:
@@ -13,7 +10,7 @@ jobs:
   go-fmt:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: Jerome1337/gofmt-action@v1.0.5
       with:
         gofmt-path: '.'
@@ -22,20 +19,20 @@ jobs:
   misspell:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: make misspell
 
   gocyclo:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: actions/setup-go@v4
     - run: make gocyclo
 
   goimports:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: Jerome1337/goimports-action@v1.0.3
 
   go-vet:
@@ -44,20 +41,20 @@ jobs:
     - uses: actions/setup-go@v4
       with:
         go-version: '^1.21.5'
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: go vet ./...
 
   staticcheck:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: actions/setup-go@v4
     - run: make staticcheck
 
   golangci:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: actions/setup-go@v4
       with:
         go-version: '1.21'
@@ -73,7 +70,7 @@ jobs:
     - uses: actions/setup-go@v4
       with:
         go-version: '^1.21.5'
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: go test ./... -race -failfast
 
   go-test-coverage:
@@ -94,7 +91,7 @@ jobs:
     - uses: actions/setup-go@v4
       with:
         go-version: '^1.21.5'
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: go install github.com/google/go-licenses@v1.6.0    
     - run: go-licenses check .
 
@@ -105,7 +102,7 @@ jobs:
       packages: write
       
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: docker/build-push-action@v4
       with:
         context: .
