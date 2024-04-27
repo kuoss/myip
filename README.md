@@ -1,7 +1,7 @@
 # myip
 "What's my IP" application
 
-[![ci](https://github.com/kuoss/myip/actions/workflows/ci.yml/badge.svg)](https://github.com/kuoss/myip/actions/workflows/ci.yml)
+[![release](https://github.com/kuoss/myip/actions/workflows/release.yml/badge.svg)](https://github.com/kuoss/myip/actions/workflows/release.yml)
 [![pull-request](https://github.com/kuoss/myip/actions/workflows/pull-request.yml/badge.svg)](https://github.com/kuoss/myip/actions/workflows/pull-request.yml)
 [![Coverage Status](https://coveralls.io/repos/github/kuoss/myip/badge.svg?branch=main)](https://coveralls.io/github/kuoss/myip?branch=main)
 [![GitHub license](https://img.shields.io/github/license/kuoss/myip.svg)](https://github.com/kuoss/myip/blob/main/LICENSE)
