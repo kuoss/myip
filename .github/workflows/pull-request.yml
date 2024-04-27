@@ -58,8 +58,8 @@ jobs:
       id: docker_meta
       with:
         images: ghcr.io/${{ github.repository }}
-      tags: |
-        type=ref,event=tag
+        tags: |
+          type=ref,event=tag
     - uses: docker/login-action@v3
       with:
         registry: ghcr.io
