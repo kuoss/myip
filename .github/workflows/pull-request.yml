@@ -1,8 +1,5 @@
 name: pull-request
 on:
-  push:
-    branches:
-    - main
   pull_request:
     types: [opened, reopened, synchronize]
 permissions:
@@ -10,103 +7,53 @@ permissions:
   pull-requests: write
 
 jobs:
-  go-fmt:
+  lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: Jerome1337/gofmt-action@v1.0.5
+    - uses: actions/checkout@v4
+    - uses: actions/setup-go@v5
       with:
-        gofmt-path: '.'
-        gofmt-flags: '-l -d'
+        go-version: '1.22'
+    - run: make lint
 
-  misspell:
+  licenses:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - run: make misspell
-
-  gocyclo:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-go@v4
-    - run: make gocyclo
-
-  goimports:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: Jerome1337/goimports-action@v1.0.3
-
-  go-vet:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/setup-go@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-go@v5
       with:
-        go-version: '^1.21.5'
-    - uses: actions/checkout@v3
-    - run: go vet ./...
-
-  staticcheck:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-go@v4
-    - run: make staticcheck
-
-  golangci:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-go@v4
-      with:
-        go-version: '1.21'
-        cache: false
-    - name: golangci-lint
-      uses: golangci/golangci-lint-action@v3
-      with:
-        args: --timeout 5m
+        go-version: '1.22'
+    - run: make licenses
 
   go-test-failfast:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/setup-go@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-go@v5
       with:
-        go-version: '^1.21.5'
-    - uses: actions/checkout@v3
+        go-version: '1.22'
     - run: go test ./... -race -failfast
 
   go-test-coverage:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-go@v4
+    - uses: actions/setup-go@v5
       with:
-        go-version: '^1.21.5'
+        go-version: '1.22'
     - run: go test ./... -race -coverprofile=profile.cov
     - uses: shogo82148/actions-goveralls@v1
       with:
         path-to-profile: profile.cov
-
-  go-licenses:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/setup-go@v4
-      with:
-        go-version: '^1.21.5'
-    - uses: actions/checkout@v3
-    - run: go install github.com/google/go-licenses@v1.6.0    
-    - run: go-licenses check .
 
   docker-build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-      
     steps:
-    - uses: actions/checkout@v3
-    - uses: docker/build-push-action@v4
+    - uses: actions/checkout@v4
+    - uses: docker/build-push-action@v5
       with:
         context: .
         push: false
