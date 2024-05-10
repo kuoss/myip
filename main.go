@@ -17,27 +17,30 @@ type Config struct {
 
 func loadConfig() (Config, error) {
 	var cfg Config
-	err := envconfig.Process("app", &cfg)
-	if err != nil {
+	if err := envconfig.Process("app", &cfg); err != nil {
 		return Config{}, fmt.Errorf("process err: %w", err)
 	}
+
 	log.Println("IP App starting...")
 	log.Println("Addr:", cfg.Addr)
 	log.Println("Proxies:", cfg.Proxies)
+
 	return cfg, nil
 }
 
 func setupRouter(cfg Config) (*gin.Engine, error) {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
-	err := router.SetTrustedProxies(cfg.Proxies)
-	if err != nil {
+
+	if err := router.SetTrustedProxies(cfg.Proxies); err != nil {
 		return nil, fmt.Errorf("setTrustedProxies err: %w", err)
 	}
+
 	router.ForwardedByClientIP = true
 	router.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, c.ClientIP()+"\n")
 	})
+
 	return router, nil
 }
 
@@ -46,12 +49,19 @@ func run() error {
 	if err != nil {
 		return fmt.Errorf("loadConfig err: %w", err)
 	}
+
 	log.Println("IP App started...")
+
 	router, err := setupRouter(cfg)
 	if err != nil {
 		return fmt.Errorf("setupRouter err: %w", err)
 	}
-	return router.Run(cfg.Addr)
+
+	if err := router.Run(cfg.Addr); err != nil {
+		return fmt.Errorf("setupRouter err: %w", err)
+	}
+
+	return nil
 }
 
 func main() {
