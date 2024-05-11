@@ -10,15 +10,15 @@ import (
 )
 
 type Config struct {
-	Debug   bool
-	Addr    string `default:":80"`
-	Proxies []string
+	Debug   bool     `exhaustruct:"optional"`
+	Addr    string   `exhaustruct:"optional"`
+	Proxies []string `exhaustruct:"optional"`
 }
 
-func loadConfig() (Config, error) {
-	var cfg Config
-	if err := envconfig.Process("app", &cfg); err != nil {
-		return Config{}, fmt.Errorf("process err: %w", err)
+func loadConfig() (*Config, error) {
+	cfg := &Config{Addr: ":80"}
+	if err := envconfig.Process("app", cfg); err != nil {
+		return nil, fmt.Errorf("process err: %w", err)
 	}
 
 	log.Println("IP App starting...")
@@ -28,9 +28,13 @@ func loadConfig() (Config, error) {
 	return cfg, nil
 }
 
-func setupRouter(cfg Config) (*gin.Engine, error) {
+func setupRouter(cfg *Config) (*gin.Engine, error) {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
+
+	if cfg == nil {
+		return nil, ErrConfigIsNil
+	}
 
 	if err := router.SetTrustedProxies(cfg.Proxies); err != nil {
 		return nil, fmt.Errorf("setTrustedProxies err: %w", err)

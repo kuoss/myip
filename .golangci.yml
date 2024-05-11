@@ -1,117 +1,29 @@
 linters:
-  disable-all: true
-  enable:
-  - asasalint
-  - asciicheck
-  - bidichk
-  - bodyclose
-  - cyclop
-  - canonicalheader
-  - containedctx
-  - contextcheck
-  - copyloopvar
-  - dogsled
-  - dupword
-  - durationcheck
-  - decorder
-  # - depguard
-  - dupl
-  - err113
-  - errcheck
-  - errchkjson
-  - errname
-  - errorlint
-  - exhaustive
-  # - exhaustruct
-  - exportloopref
-  - fatcontext
-  - forbidigo
-  - forcetypeassert
-  - funlen
-  - gci
-  - goconst
-  - gocritic
-  - gocyclo
-  - godot
-  - gofmt
-  - gofumpt
-  - goheader
-  - goimports
-  - gomodguard
-  - goprintffuncname
-  - gosec
-  - gosimple
-  - govet
-  - ginkgolinter
-  - gocheckcompilerdirectives
-  - gochecknoglobals
-  - gochecknoinits
-  - gochecksumtype
-  - gocognit
-  - godox
-  - gomoddirectives
-  - gosmopolitan
-  - grouper
-  - importas
-  - ineffassign
-  - inamedparam
-  - interfacebloat
-  - intrange
-  - ireturn
-  # - lll
-  - loggercheck
-  - makezero
-  - misspell
-  - maintidx
-  - mirror
-  - mnd
-  - musttag
-  - nakedret
-  - nestif
-  - nilerr
-  - noctx
-  - nolintlint
-  - nilnil
-  - nlreturn
-  - nonamedreturns
-  - nosprintfhostport
-  - prealloc
-  - predeclared
-  # - paralleltest
-  - perfsprint
-  - promlinter
-  - protogetter
-  - revive
-  - rowserrcheck
-  - reassign
-  - sqlclosecheck
-  - staticcheck
-  - stylecheck
-  - sloglint
-  # - spancheck
-  - thelper
-  - tagalign
-  - tagliatelle
-  - tenv
-  - testableexamples
-  - testpackage
-  - testifylint
-  - tparallel
-  - typecheck
-  - unconvert
-  - unparam
-  - unused
-  - usestdlibvars
-  - varnamelen
-  - wastedassign
-  - whitespace
-  - wrapcheck
-  - wsl
-  - zerologlint
+  enable-all: true
+
+issues:
+  exclude-rules:
+  - path: _test\.go
+    linters:
+    - lll
 
 linters-settings:
-  cyclop:
-    max-complexity: 30
+  depguard:
+    rules:
+      main:
+        files:
+        - $all
+        - "!$test"
+        allow:
+        - $gostd
+        - github.com/gin-gonic/gin
+        - github.com/kelseyhightower/envconfig
+      test:
+        files:
+        - $test
+        allow:
+        - $gostd
+        - github.com/stretchr/testify/require
   gci:
     sections:
     - standard
@@ -120,5 +32,7 @@ linters-settings:
   gocritic:
     enabled-tags:
     - diagnostic
-    - experimental
+    - style
     - performance
+    - experimental
+    - opinionated
