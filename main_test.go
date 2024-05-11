@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 )
@@ -73,6 +75,22 @@ func TestSetupRouter(t *testing.T) {
 }
 
 func TestRun(t *testing.T) {
+	t.Run("ok", func(t *testing.T) {
+		t.Setenv("APP_ADDR", ":1234")
+
+		go run() //nolint:errcheck // smoke test
+		time.Sleep(500 * time.Microsecond)
+
+		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "http://127.0.0.1:1234", http.NoBody)
+		require.NoError(t, err)
+		resp, err := http.DefaultClient.Do(req)
+		require.NoError(t, err)
+		body, err := io.ReadAll(resp.Body)
+		resp.Body.Close()
+		require.NoError(t, err)
+		require.Equal(t, "127.0.0.1\n", string(body))
+	})
+
 	t.Run("error APP_DEBUG", func(t *testing.T) {
 		t.Setenv("APP_DEBUG", "hello")
 
@@ -84,7 +102,7 @@ func TestRun(t *testing.T) {
 		t.Setenv("APP_ADDR", "hello")
 
 		err := run()
-		require.EqualError(t, err, "setupRouter err: listen tcp: address hello: missing port in address")
+		require.EqualError(t, err, "listen tcp: address hello: missing port in address")
 	})
 
 	t.Run("error APP_PROXIES", func(t *testing.T) {

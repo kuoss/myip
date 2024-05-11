@@ -10,6 +10,12 @@ run:
 test:
 	go test -v ./... -race -failfast
 
+.PHONY: cover
+cover:
+	go test -coverprofile=cover.out ./...
+	go tool cover -func=cover.out
+	go tool cover -func=cover.out | grep ^total: | grep 100.0%
+
 .PHONY: lint
 lint:
 	go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@$(GOLANGCI_LINT_VER) || true

@@ -61,11 +61,7 @@ func run() error {
 		return fmt.Errorf("setupRouter err: %w", err)
 	}
 
-	if err := router.Run(cfg.Addr); err != nil {
-		return fmt.Errorf("setupRouter err: %w", err)
-	}
-
-	return nil
+	return router.Run(cfg.Addr) //nolint:wrapcheck // never ends
 }
 
 func main() {
