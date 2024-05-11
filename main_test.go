@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"testing"
 	"time"
 
@@ -75,13 +76,21 @@ func TestSetupRouter(t *testing.T) {
 }
 
 func TestRun(t *testing.T) {
+	getRandomAddr := func() string {
+		server := httptest.NewServer(nil)
+		server.Close()
+		u, _ := url.Parse(server.URL)
+		return ":" + u.Port()
+	}
+
 	t.Run("ok", func(t *testing.T) {
-		t.Setenv("APP_ADDR", ":1234")
+		addr := getRandomAddr()
+		t.Setenv("APP_ADDR", addr)
 
 		go run() //nolint:errcheck // smoke test
 		time.Sleep(500 * time.Microsecond)
 
-		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "http://127.0.0.1:1234", http.NoBody)
+		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "http://127.0.0.1"+addr, http.NoBody)
 		require.NoError(t, err)
 		resp, err := http.DefaultClient.Do(req)
 		require.NoError(t, err)
