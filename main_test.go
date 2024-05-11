@@ -80,6 +80,7 @@ func TestRun(t *testing.T) {
 		server := httptest.NewServer(nil)
 		server.Close()
 		u, _ := url.Parse(server.URL)
+
 		return ":" + u.Port()
 	}
 
