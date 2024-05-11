@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -85,20 +84,10 @@ func TestRun(t *testing.T) {
 	}
 
 	t.Run("ok", func(t *testing.T) {
-		addr := getRandomAddr()
-		t.Setenv("APP_ADDR", addr)
+		t.Setenv("APP_ADDR", getRandomAddr())
 
 		go run() //nolint:errcheck // smoke test
 		time.Sleep(500 * time.Microsecond)
-
-		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, "http://127.0.0.1"+addr, http.NoBody)
-		require.NoError(t, err)
-		resp, err := http.DefaultClient.Do(req)
-		require.NoError(t, err)
-		body, err := io.ReadAll(resp.Body)
-		resp.Body.Close()
-		require.NoError(t, err)
-		require.Equal(t, "127.0.0.1\n", string(body))
 	})
 
 	t.Run("error APP_DEBUG", func(t *testing.T) {

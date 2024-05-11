@@ -29,7 +29,7 @@ func loadConfig() (*Config, error) {
 }
 
 func setupRouter(cfg *Config) (*gin.Engine, error) {
-	router := gin.Default()
+	router := gin.New()
 
 	if cfg == nil {
 		return nil, ErrConfigIsNil
