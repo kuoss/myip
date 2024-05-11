@@ -27,4 +27,4 @@ licenses:
 	go-licenses check .
 
 .PHONY: checks
-checks: test lint licenses
+checks: test cover lint licenses

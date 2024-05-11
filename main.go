@@ -29,7 +29,6 @@ func loadConfig() (*Config, error) {
 }
 
 func setupRouter(cfg *Config) (*gin.Engine, error) {
-	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 
 	if cfg == nil {
