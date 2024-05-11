@@ -7,6 +7,27 @@ permissions:
   pull-requests: write
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-go@v5
+      with:
+        go-version: '1.22'
+    - run: make test
+
+  cover:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-go@v5
+      with:
+        go-version: '1.22'
+    - run: go test ./... -race -coverprofile=profile.cov
+    - uses: shogo82148/actions-goveralls@v1
+      with:
+        path-to-profile: profile.cov
+
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -24,27 +45,6 @@ jobs:
       with:
         go-version: '1.22'
     - run: make licenses
-
-  go-test-failfast:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-go@v5
-      with:
-        go-version: '1.22'
-    - run: go test ./... -race -failfast
-
-  go-test-coverage:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-go@v5
-      with:
-        go-version: '1.22'
-    - run: go test ./... -race -coverprofile=profile.cov
-    - uses: shogo82148/actions-goveralls@v1
-      with:
-        path-to-profile: profile.cov
 
   docker:
     runs-on: ubuntu-latest
