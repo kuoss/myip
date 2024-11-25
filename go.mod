@@ -5,7 +5,7 @@ go 1.22.2
 require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/kelseyhightower/envconfig v1.4.0
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 )
 
 require (
