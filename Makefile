@@ -1,3 +1,5 @@
+GO_LICENSES_VERSION := v1.6.0
+
 .PHONY: test
 test:
 	go test -v ./... -race -failfast
@@ -11,6 +13,11 @@ cover:
 .PHONY: lint
 lint: golangci-lint ## Run golangci-lint linter
 	$(GOLANGCI_LINT) run -v
+
+.PHONY: licenses
+licenses:
+	go install -v github.com/google/go-licenses@$(GO_LICENSES_VERSION) || true
+	go-licenses check .
 
 .PHONY: checks
 checks: test cover lint licenses
