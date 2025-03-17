@@ -1,31 +1,43 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/kelseyhightower/envconfig"
 )
 
+var ErrConfigIsNil = errors.New("config is nil")
+
 type Config struct {
-	Debug   bool     `exhaustruct:"optional"`
 	Addr    string   `exhaustruct:"optional"`
 	Proxies []string `exhaustruct:"optional"`
 }
 
-func loadConfig() (*Config, error) {
+func loadConfig() *Config {
 	cfg := &Config{Addr: ":80"}
-	if err := envconfig.Process("app", cfg); err != nil {
-		return nil, fmt.Errorf("process err: %w", err)
+
+	// Load Addr
+	addr := os.Getenv("APP_ADDR")
+	if addr != "" {
+		cfg.Addr = addr
+	}
+
+	// Load Proxies
+	proxiesStr := os.Getenv("APP_PROXIES")
+	if proxiesStr != "" {
+		cfg.Proxies = strings.Split(proxiesStr, ",")
 	}
 
 	log.Println("IP App starting...")
 	log.Println("Addr:", cfg.Addr)
 	log.Println("Proxies:", cfg.Proxies)
 
-	return cfg, nil
+	return cfg
 }
 
 func setupRouter(cfg *Config) (*gin.Engine, error) {
@@ -48,19 +60,16 @@ func setupRouter(cfg *Config) (*gin.Engine, error) {
 }
 
 func run() error {
-	cfg, err := loadConfig()
-	if err != nil {
-		return fmt.Errorf("loadConfig err: %w", err)
-	}
-
 	log.Println("IP App started...")
+
+	cfg := loadConfig()
 
 	router, err := setupRouter(cfg)
 	if err != nil {
 		return fmt.Errorf("setupRouter err: %w", err)
 	}
 
-	return router.Run(cfg.Addr) //nolint:wrapcheck // never ends
+	return router.Run(cfg.Addr) //nolint:wrapcheck //nolint:gocritic
 }
 
 func main() {
