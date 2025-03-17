@@ -12,18 +12,10 @@ import (
 )
 
 func TestLoadConfig(t *testing.T) { //nolint:tparallel // using t.Setenv()
-	t.Run("error", func(t *testing.T) {
-		t.Setenv("APP_DEBUG", "hello")
-
-		cfg, err := loadConfig()
-		require.EqualError(t, err, "process err: envconfig.Process: assigning APP_DEBUG to Debug: converting 'hello' to type bool. details: strconv.ParseBool: parsing \"hello\": invalid syntax")
-		require.Nil(t, cfg)
-	})
 	t.Run("ok", func(t *testing.T) {
 		t.Parallel()
 
-		cfg, err := loadConfig()
-		require.NoError(t, err)
+		cfg := loadConfig()
 		require.Equal(t, &Config{Addr: ":80"}, cfg)
 	})
 }
@@ -88,13 +80,6 @@ func TestRun(t *testing.T) {
 
 		go run() //nolint:errcheck // smoke test
 		time.Sleep(500 * time.Microsecond)
-	})
-
-	t.Run("error APP_DEBUG", func(t *testing.T) {
-		t.Setenv("APP_DEBUG", "hello")
-
-		err := run()
-		require.EqualError(t, err, `loadConfig err: process err: envconfig.Process: assigning APP_DEBUG to Debug: converting 'hello' to type bool. details: strconv.ParseBool: parsing "hello": invalid syntax`)
 	})
 
 	t.Run("error APP_ADDR", func(t *testing.T) {
