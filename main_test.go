@@ -16,7 +16,7 @@ func TestLoadConfig(t *testing.T) { //nolint:tparallel // using t.Setenv()
 		t.Parallel()
 
 		cfg := loadConfig()
-		require.Equal(t, &Config{Addr: ":80"}, cfg)
+		require.Equal(t, &Config{Addr: ":8080"}, cfg)
 	})
 }
 
