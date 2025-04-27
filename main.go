@@ -19,7 +19,7 @@ type Config struct {
 }
 
 func loadConfig() *Config {
-	cfg := &Config{Addr: ":80"}
+	cfg := &Config{Addr: ":8080"}
 
 	// Load Addr
 	addr := os.Getenv("APP_ADDR")

@@ -12,5 +12,5 @@
 
 env           | description                                     | default | example
 ------------- | ----------------------------------------------- | ------- | -------
-`APP_ADDR`    | the TCP address for the server to listen on     | `:80`   | `:8080`
+`APP_ADDR`    | the TCP address for the server to listen on     | `:8080` | `:8000`
 `APP_PROXIES` | a comma separated list of trusted proxies CIDRs |         | `10.0.0.0/8,192.168.1.33`
