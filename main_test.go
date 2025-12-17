@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -58,7 +57,7 @@ func TestSetupRouter(t *testing.T) {
 		require.NoError(t, err)
 
 		w := httptest.NewRecorder()
-		req, err := http.NewRequestWithContext(context.TODO(), http.MethodGet, "/", http.NoBody)
+		req, err := http.NewRequestWithContext(t.Context(), http.MethodGet, "/", http.NoBody)
 		require.NoError(t, err)
 		router.ServeHTTP(w, req)
 		require.Equal(t, 200, w.Code)
