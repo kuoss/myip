@@ -1,10 +1,7 @@
-FROM golang:1.24 AS builder
+FROM golang:1.27 AS builder
 ARG VERSION
 
 WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download -x
-
 COPY . .
 RUN CGO_ENABLED=0 go build -ldflags="-w -s -X 'main.Version=$VERSION'" -o /myip
 
